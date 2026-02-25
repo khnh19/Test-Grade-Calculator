@@ -47,7 +47,7 @@ def main():
             score = 0
             for i in range(25):
                 student_answer = values[i + 1]
-                # # Đúng +4, bỏ +0, sai -1
+                # Đúng +4, bỏ +0, sai -1
                 if student_answer == answer_key[i]:
                     score += 4
                 elif student_answer == "":
