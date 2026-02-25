@@ -1,3 +1,5 @@
+import pandas as pd
+
 def main():
     # Task 1: Nhập tên file
     while True:
@@ -65,32 +67,19 @@ def main():
 
     # Task 3: Thống kê điểm
     if scores:
-        score_values = [s for _, s in scores]
-        mean = sum(score_values) / len(score_values)
-        highest = max(score_values)
-        lowest = min(score_values)
-        score_range = highest - lowest
-        sorted_scores = sorted(score_values)
-        n = len(sorted_scores)
-        if n % 2 == 1:
-            median = sorted_scores[n // 2]
-        else:
-            median = (sorted_scores[n // 2 - 1] + sorted_scores[n // 2]) / 2
+        df = pd.DataFrame(scores, columns=["student_id", "score"])
+        median = df["score"].median()
         if median == int(median):
             median = int(median)
 
-        print(f"Mean (average) score: {mean:.2f}")
-        print(f"Highest score: {highest}")
-        print(f"Lowest score: {lowest}")
-        print(f"Range of scores: {score_range}")
+        print(f"Mean (average) score: {df['score'].mean():.2f}")
+        print(f"Highest score: {df['score'].max()}")
+        print(f"Lowest score: {df['score'].min()}")
+        print(f"Range of scores: {df['score'].max() - df['score'].min()}")
         print(f"Median score: {median}")
 
-    # Task 4: Ghi kết quả ra file
-    result_filename = filename + "_grades.txt"
-    result_file = open(result_filename, "w")
-    for student_id, score in scores:
-        result_file.write(f"{student_id},{score}\n")
-    result_file.close()
+        # Task 4: Ghi kết quả ra file
+        df.to_csv(filename + "_grades.txt", index=False, header=False)
 
 if __name__ == "__main__":
     main()
